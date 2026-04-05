@@ -181,16 +181,16 @@
     line-height: 1.6;
 }
 
-/* Les Petits Carrés (Futur) */
 .side-project {
     background: var(--glass);
     border: 1px solid rgba(255, 255, 255, 0.05);
     padding: 20px;
     border-radius: 15px;
     display: flex;
+    flex-direction: column; 
     align-items: center;
     justify-content: center;
-    opacity: 0.3;
+    opacity: 0.4;
     transition: opacity 0.3s ease;
 }
 
@@ -203,6 +203,14 @@
     text-align: center;
 }
 
+.side-project em {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.7rem;
+    color: #666;
+    font-style: italic;
+    font-weight: normal;
+}
 /* Responsive pour mobile */
 @media (max-width: 600px) {
     .grid-container {
@@ -227,24 +235,24 @@
     <h1 class="reveal">L'éthique au service <br><span>du grand marché.</span></h1>
     
     <div class="grid-container reveal" style="animation-delay: 0.1s;">
-        
-        <div class="main-project">
-            <span class="ethical-tag" style="margin-bottom: 10px;">Sur-mesure</span>
-            <h3>Web & Discord</h3>
-            <p>Développement de bots et sites web créés par des humains, pour des humains. Pas d'automatisation sans âme.</p>
-        </div>
-
-        <div class="side-project">
-            <span>Logistique durable</span>
-            <h6 style="font-style: italic;">Bientôt...</h6>
-        </div>
-
-        <div class="side-project">
-            <span>Proximité humaine</span>
-            <h6 style="font-style: italic;">Bientôt...</h6>
-        </div>
-
+    
+    <div class="main-project">
+        <span class="ethical-tag" style="margin-bottom: 10px;">Sur-mesure</span>
+        <h3>Web & Discord</h3>
+        <p>Développement de bots et sites web créés par des humains, pour des humains. Pas d'automatisation sans âme.</p>
     </div>
+
+    <div class="side-project">
+        <span>Logistique durable</span>
+        <em>Bientôt...</em>
+    </div>
+
+    <div class="side-project">
+        <span>Proximité humaine</span>
+        <em>Bientôt...</em>
+    </div>
+
+</div>
 
     <div style="margin-top: 50px;">
         <a href="mailto:remi.de.loewe@proton.me" class="cta reveal" style="animation-delay: 0.3s;">Lancer un projet</a>
