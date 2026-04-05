@@ -144,59 +144,72 @@
             display: block;
         }
         /* --- Styles des cartes de domaines --- */
-.grid-projects {
+/* --- Grille Asymétrique --- */
+.grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: 1.5fr 1fr; /* Le gros carré prend 1.5 fois la place des petits */
+    grid-template-rows: repeat(2, 1fr); /* Deux lignes pour empiler les petits carrés */
     gap: 20px;
     width: 100%;
     max-width: 900px;
     margin-top: 40px;
+    padding: 20px;
 }
 
-.project-card {
+/* Le Gros Carré Web/Discord */
+.main-project {
+    grid-row: span 2; /* Il s'étend sur les deux lignes de hauteur */
+    background: var(--glass);
+    border: 1px solid var(--cyan);
+    padding: 40px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    box-shadow: 0 0 30px rgba(92, 225, 230, 0.05);
+}
+
+.main-project h3 {
+    font-size: 1.8rem;
+    color: var(--cyan);
+    margin-bottom: 15px;
+}
+
+.main-project p {
+    color: #ccc;
+    line-height: 1.6;
+}
+
+/* Les Petits Carrés (Futur) */
+.side-project {
     background: var(--glass);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 30px;
+    padding: 20px;
     border-radius: 15px;
-    text-align: center;
-    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
 }
 
-/* Style Actif : Web & Discord */
-.project-card.active {
-    border-color: var(--cyan);
-    box-shadow: 0 0 20px rgba(92, 225, 230, 0.1);
-}
-
-.project-card.active h3 {
-    color: var(--cyan);
-}
-
-.project-card.active p {
-    color: #eee;
-    font-size: 0.9rem;
-    margin-top: 10px;
-}
-
-/* Style Bientôt : Logistique & Proximité */
-.project-card.soon {
-    opacity: 0.3; /* Très grisé */
-    filter: grayscale(1);
-}
-
-.project-card.soon h3 {
-    color: #888;
-    font-size: 1rem;
-}
-
-.ethical-tag {
+.side-project span {
     color: var(--mint);
-    font-weight: bold;
     text-transform: uppercase;
-    font-size: 0.7rem;
-    letter-spacing: 1px;
-    display: block;
-    margin-bottom: 5px;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Responsive pour mobile */
+@media (max-width: 600px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+    .main-project { grid-row: auto; }
 }
     </style>
 </head>
@@ -213,22 +226,20 @@
 
     <h1 class="reveal">L'éthique au service <br><span>du grand marché.</span></h1>
     
-    <div class="grid-projects reveal" style="animation-delay: 0.1s;">
+    <div class="grid-container reveal" style="animation-delay: 0.1s;">
         
-        <div class="project-card active">
-            <span class="ethical-tag">Sur-mesure</span>
+        <div class="main-project">
+            <span class="ethical-tag" style="margin-bottom: 10px;">Sur-mesure</span>
             <h3>Web & Discord</h3>
             <p>Développement de bots et sites web créés par des humains, pour des humains. Pas d'automatisation sans âme.</p>
         </div>
 
-        <div class="project-card soon">
-            <span class="ethical-tag">Logistique durable</span>
-            <p style="font-size: 0.8rem;">(À venir)</p>
+        <div class="side-project">
+            <span>Logistique durable</span>
         </div>
 
-        <div class="project-card soon">
-            <span class="ethical-tag">Proximité humaine</span>
-            <p style="font-size: 0.8rem;">(À venir)</p>
+        <div class="side-project">
+            <span>Proximité humaine</span>
         </div>
 
     </div>
