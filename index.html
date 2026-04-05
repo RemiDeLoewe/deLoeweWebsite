@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>De Loewe | Excellence & Innovation</title>
     <style>
+        
         :root {
             --cyan: #5ce1e6;
             --mint: #18cb96;
@@ -142,6 +143,60 @@
             margin-bottom: 10px;
             display: block;
         }
+        /* --- AJOUTE CECI DANS TON BLOC <style> --- */
+.grid-projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    width: 100%;
+    max-width: 1100px;
+    margin-top: 50px;
+    padding: 20px;
+}
+
+.project-card {
+    background: var(--glass);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: left;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.project-card:hover {
+    border-color: var(--mint);
+    transform: translateY(-5px);
+    background: rgba(24, 203, 150, 0.02);
+}
+
+.project-card i {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.project-card h3 {
+    color: var(--cyan);
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.project-card p {
+    color: #888;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.ethical-tag {
+    color: var(--mint);
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    display: block;
+}
     </style>
 </head>
 <body>
@@ -153,19 +208,43 @@
     </header>
 
     <main class="hero">
-        <span class="badge">Nouveau Chapitre</span>
-        
-        <div class="heart-icon">💚</div>
+    <span class="badge">Vision 2026</span>
+    
+    <div class="heart-icon">💚</div>
 
-        <h1 class="reveal">L'avenir se dessine <br><span>avec passion.</span></h1>
-        
-        <p class="description reveal" style="animation-delay: 0.2s;">
-            De Loewe redéfinit les standards pour vous offrir une expérience unique, 
-            mêlant l'élégance de demain à l'innovation d'aujourd'hui.
-        </p>
+    <h1 class="reveal">L'éthique au service <br><span>du grand marché.</span></h1>
+    
+    <p class="description reveal" style="animation-delay: 0.1s;">
+        De Loewe développe des solutions concrètes pour réhabiliter le quotidien, 
+        de l'artisanat local à la haute technologie, sans compromis sur l'humain.
+    </p>
 
-        <a href="mailto:contact@deloewe.com" class="cta reveal" style="animation-delay: 0.4s;">Nous contacter</a>
-    </main>
+    <div class="grid-projects reveal" style="animation-delay: 0.2s;">
+        
+        <div class="project-card">
+            <span class="ethical-tag">Proximité</span>
+            <h3>Boulangerie Mobile</h3>
+            <p>Ramener le pain frais et le lien social dans les villages oubliés avec un service itinérant éthique.</p>
+        </div>
+
+        <div class="project-card">
+            <span class="ethical-tag">Sur-mesure</span>
+            <h3>Web & Discord</h3>
+            <p>Développement de bots et sites web créés par des humains, pour des humains. Pas d'automatisation sans âme.</p>
+        </div>
+
+        <div class="project-card">
+            <span class="ethical-tag">Logistique durable</span>
+            <h3>Fret Ferroviaire</h3>
+            <p>L'ambition future de décarboner le transport de marchandises via un réseau ferré optimisé et équitable.</p>
+        </div>
+
+    </div>
+
+    <div style="margin-top: 50px;">
+        <a href="mailto:contact@deloewe.com" class="cta reveal" style="animation-delay: 0.4s;">Rejoindre l'aventure</a>
+    </div>
+</main>
 
     <footer>
         &copy; 2026 DE LOEWE. Tous droits réservés.
