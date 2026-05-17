@@ -75,7 +75,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Language Toggle Button */
         .lang-switch {
             background: var(--glass);
             border: 1px solid var(--glass-border);
@@ -122,6 +121,71 @@
         }
 
         h1 span { color: var(--mint); }
+
+        /* Dream card */
+        .dream-wrapper {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            justify-content: flex-end;
+            margin: 36px 0 0 0;
+        }
+
+        .dream-card {
+            width: min(520px, 100%);
+            background: linear-gradient(135deg, rgba(24, 203, 150, 0.07) 0%, rgba(92, 225, 230, 0.04) 100%);
+            border: 1px solid rgba(92, 225, 230, 0.25);
+            border-right: 4px solid var(--mint);
+            border-radius: 18px 0 0 18px;
+            padding: 28px 32px 28px 28px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dream-card::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(24, 203, 150, 0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .dream-icon {
+            font-size: 1.4rem;
+            margin-bottom: 14px;
+            display: block;
+        }
+
+        .dream-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--mint);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .dream-card p {
+            font-size: 0.92rem;
+            line-height: 1.85;
+            color: rgba(255,255,255,0.72);
+        }
+
+        .dream-card p strong {
+            color: white;
+            font-weight: 600;
+        }
+
+        .dream-card p em {
+            color: var(--cyan);
+            font-style: normal;
+        }
 
         .grid-container {
             display: grid;
@@ -202,6 +266,7 @@
         @media (max-width: 600px) {
             .grid-container { grid-template-columns: 1fr; }
             .main-project { grid-row: auto; }
+            .dream-card { border-radius: 18px; border-right: 1px solid rgba(92, 225, 230, 0.25); border-left: 4px solid var(--mint); }
         }
 
         .reveal { animation: fadeIn 1s ease forwards; }
@@ -221,7 +286,19 @@
         <div class="heart-icon" style="font-size: 2rem; margin-bottom: 10px;">💚</div>
 
         <h1 class="reveal" data-i18n="hero-title">Ethics serving <br><span>the global market.</span></h1>
-        
+
+        <div class="dream-wrapper reveal">
+            <div class="dream-card">
+                <span class="dream-icon">🚂</span>
+                <span class="dream-label" data-i18n="dream-label">Notre vision</span>
+                <p data-i18n="dream-text">
+                    Il y a des passions qu'on ne choisit pas. Elles s'imposent, elles grandissent, elles finissent par tout traverser.<br><br>
+                    De Loewe est née de l'une d'elles — et de la conviction que ce qu'on aime profondément peut, un jour, <strong>servir à quelque chose de plus grand que soi.</strong><br><br>
+                    Bâtir des services <em>vrais</em>, attendus, utiles au quotidien. Et au bout du chemin, contribuer à ce rêve un peu fou : <strong>redonner au rail français la place qu'il mérite.</strong>
+                </p>
+            </div>
+        </div>
+
         <div class="grid-container reveal">
             <div class="main-project">
                 <span class="ethical-tag" data-i18n="tag-custom">Tailor-made</span>
@@ -264,7 +341,9 @@
                 "side-2": "Proximité humaine",
                 "coming-soon": "Bientôt...",
                 "cta-main": "Lancer un projet",
-                "footer-rights": "Tous droits réservés."
+                "footer-rights": "Tous droits réservés.",
+                "dream-label": "Notre vision",
+                "dream-text": "Il y a des passions qu'on ne choisit pas. Elles s'imposent, elles grandissent, elles finissent par tout traverser.<br><br>De Loewe est née de l'une d'elles — et de la conviction que ce qu'on aime profondément peut, un jour, <strong>servir à quelque chose de plus grand que soi.</strong><br><br>Bâtir des services <em>vrais</em>, attendus, utiles au quotidien. Et au bout du chemin, contribuer à ce rêve un peu fou : <strong>redonner au rail français la place qu'il mérite.</strong>"
             },
             en: {
                 "hero-title": "Ethics serving <br><span>the global market.</span>",
@@ -276,7 +355,9 @@
                 "side-2": "Human Proximity",
                 "coming-soon": "Coming soon...",
                 "cta-main": "Start a project",
-                "footer-rights": "All rights reserved."
+                "footer-rights": "All rights reserved.",
+                "dream-label": "Our vision",
+                "dream-text": "Some passions don't ask for permission. They grow, they spread, they end up shaping everything.<br><br>De Loewe was born from one of them — and from the belief that what we love deeply can, one day, <strong>serve something greater than ourselves.</strong><br><br>Building services that are <em>real</em>, needed, genuinely useful. And at the end of the road, contributing to one quietly bold dream: <strong>giving French rail the place it deserves.</strong>"
             }
         };
 
@@ -296,7 +377,6 @@
             updateContent();
         }
 
-        // Initialiser au chargement
         updateContent();
     </script>
 </body>
