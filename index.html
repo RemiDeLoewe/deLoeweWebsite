@@ -3,61 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>De Loewe | Ethics serving the global market</title>
     <meta name="description" content="Custom Web & Discord development. Ethics serving the global market. Human-centric solutions, no soulless automation.">
     <meta name="keywords" content="web development, discord bot, ethics, innovation, De Loewe, freelance, tailor-made">
     <meta name="author" content="De Loewe">
-    
     <link rel="canonical" href="https://deloewe.com/" />
-
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://deloewe.com/">
     <meta property="og:title" content="De Loewe | Ethics serving the global market">
     <meta property="og:description" content="Custom Discord bots and websites created by humans, for humans. Discover our ethical approach.">
     <meta property="og:image" content="https://deloewe.com/public/images/dl_mini.png">
-
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://deloewe.com/">
     <meta property="twitter:title" content="De Loewe | Ethics serving the global market">
     <meta property="twitter:description" content="Human-centric Web & Discord development. No soulless automation.">
     <meta property="twitter:image" content="https://deloewe.com/public/images/dl_mini.png">
-
     <link rel="icon" type="image/png" href="favicon.png">
     <style>
         :root {
             --cyan: #5ce1e6;
             --mint: #18cb96;
             --dark: #0a0a0a;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass: rgba(255,255,255,0.03);
+            --glass-border: rgba(255,255,255,0.1);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; }
+
+        html { scroll-behavior: smooth; }
 
         body {
             background-color: var(--dark);
             color: white;
             overflow-x: hidden;
+        }
+
+        /* ── BACKGROUND GLOW ── */
+        .bg-glow {
+            position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(92,225,230,0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(24,203,150,0.05) 0%, transparent 40%);
+        }
+
+        /* ── FLOATING NAV ── */
+        .side-nav {
+            position: fixed;
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            gap: 10px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 14px 10px;
+            backdrop-filter: blur(12px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
-        .bg-glow {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            background: 
-                radial-gradient(circle at 10% 20%, rgba(92, 225, 230, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(24, 203, 150, 0.05) 0%, transparent 40%);
+        .side-nav a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 8px 6px;
+            border-radius: 12px;
+            transition: all 0.25s ease;
         }
 
+        .side-nav a svg { width: 18px; height: 18px; opacity: 0.5; transition: opacity 0.25s; }
+
+        .side-nav a:hover,
+        .side-nav a.active {
+            color: var(--mint);
+            background: rgba(24,203,150,0.08);
+        }
+
+        .side-nav a:hover svg,
+        .side-nav a.active svg { opacity: 1; }
+
+        .side-nav a.active { color: var(--cyan); }
+
+        /* Mobile nav — apparaît après arrêt du scroll */
+        @media (max-width: 768px) {
+            .side-nav {
+                left: 50%;
+                top: auto;
+                bottom: 20px;
+                transform: translateX(-50%);
+                flex-direction: row;
+                padding: 10px 16px;
+                border-radius: 50px;
+                opacity: 0;
+                pointer-events: none;
+            }
+            .side-nav.visible {
+                opacity: 1;
+                pointer-events: all;
+            }
+            .side-nav a { flex-direction: row; gap: 6px; font-size: 0.65rem; }
+        }
+
+        /* ── HEADER ── */
         header {
             padding: 30px 5%;
             display: flex;
@@ -66,78 +122,81 @@
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            font-size: 1.5rem; font-weight:800; letter-spacing:2px; text-transform:uppercase;
             background: linear-gradient(90deg, var(--cyan), var(--mint));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
         .lang-switch {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            background: var(--glass); border: 1px solid var(--glass-border);
+            color: white; padding: 8px 16px; border-radius: 20px;
+            cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: all 0.3s;
         }
+        .lang-switch:hover { border-color: var(--cyan); background: rgba(255,255,255,0.08); }
 
-        .lang-switch:hover {
-            border-color: var(--cyan);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .hero {
-            flex: 1;
+        /* ── SECTION BASE ── */
+        section {
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            padding: 80px 10% 80px calc(10% + 0px);
             text-align: center;
-            padding: 40px 10%;
         }
 
-        .badge {
-            background: var(--glass);
-            border: 1px solid rgba(92, 225, 230, 0.2);
-            padding: 8px 16px;
-            border-radius: 100px;
-            font-size: 0.8rem;
-            color: var(--cyan);
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        h1 {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            line-height: 1.1;
-            margin-bottom: 20px;
+        /* ── SECTION INTRO ── */
+        #intro .brand-name {
+            font-size: clamp(3.5rem, 12vw, 8rem);
             font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1;
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--mint) 60%, rgba(255,255,255,0.8) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 28px;
         }
 
-        h1 span { color: var(--mint); }
-
-        /* Dream card */
-        .dream-wrapper {
-            width: 100%;
-            max-width: 900px;
+        .tagwords {
             display: flex;
-            justify-content: flex-end;
-            margin: 36px 0 0 0;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 0;
+        }
+
+        .tagwords span {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.25);
+            position: relative;
+        }
+
+        .tagwords span.accent {
+            color: var(--mint);
+        }
+
+        .tagwords span:not(:last-child)::after {
+            content: '·';
+            position: absolute;
+            right: -12px;
+            color: rgba(255,255,255,0.1);
+        }
+
+        /* ── SECTION HISTOIRE ── */
+        #histoire {
+            background: linear-gradient(180deg, transparent 0%, rgba(24,203,150,0.02) 50%, transparent 100%);
         }
 
         .dream-card {
-            width: min(520px, 100%);
-            background: linear-gradient(135deg, rgba(24, 203, 150, 0.07) 0%, rgba(92, 225, 230, 0.04) 100%);
-            border: 1px solid rgba(92, 225, 230, 0.25);
-            border-right: 4px solid var(--mint);
-            border-radius: 18px 0 0 18px;
-            padding: 28px 32px 28px 28px;
+            max-width: 680px;
+            background: linear-gradient(135deg, rgba(24,203,150,0.07) 0%, rgba(92,225,230,0.03) 100%);
+            border: 1px solid rgba(92,225,230,0.15);
+            border-left: 3px solid var(--mint);
+            border-radius: 0 20px 20px 0;
+            padding: 44px 48px;
             text-align: left;
             position: relative;
             overflow: hidden;
@@ -146,46 +205,37 @@
         .dream-card::before {
             content: '';
             position: absolute;
-            top: -30px;
-            right: -30px;
-            width: 120px;
-            height: 120px;
+            top: -60px; right: -60px;
+            width: 200px; height: 200px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(24, 203, 150, 0.12) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(24,203,150,0.08) 0%, transparent 70%);
             pointer-events: none;
         }
 
-        .dream-icon {
-            font-size: 1.4rem;
-            margin-bottom: 14px;
-            display: block;
-        }
-
         .dream-label {
-            font-size: 0.65rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--mint);
-            margin-bottom: 10px;
-            display: block;
+            font-size: 0.65rem; font-weight:700; letter-spacing:2px;
+            text-transform: uppercase; color: var(--mint);
+            margin-bottom: 20px; display:block;
         }
 
         .dream-card p {
-            font-size: 0.92rem;
-            line-height: 1.85;
-            color: rgba(255,255,255,0.72);
+            font-size: 1rem;
+            line-height: 2;
+            color: rgba(255,255,255,0.65);
         }
 
-        .dream-card p strong {
-            color: white;
-            font-weight: 600;
+        .dream-card p strong { color: white; font-weight: 600; }
+        .dream-card p em { color: var(--cyan); font-style: normal; }
+
+        /* ── SECTION SERVICES ── */
+        #services h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            font-weight: 900;
         }
 
-        .dream-card p em {
-            color: var(--cyan);
-            font-style: normal;
-        }
+        #services h1 span { color: var(--mint); }
 
         .grid-container {
             display: grid;
@@ -207,177 +257,239 @@
         }
 
         .ethical-tag {
-            display: inline-block;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--cyan);
-            margin-bottom: 10px;
+            display: inline-block; font-size:0.7rem;
+            text-transform:uppercase; letter-spacing:1px;
+            color: var(--cyan); margin-bottom:10px;
         }
 
-        .main-project h3 { font-size: 1.8rem; color: var(--cyan); margin-bottom: 15px; }
-        .main-project p { color: #ccc; line-height: 1.6; }
+        .main-project h3 { font-size:1.8rem; color:var(--cyan); margin-bottom:15px; }
+        .main-project p { color:#ccc; line-height:1.6; }
 
         .side-project {
             background: var(--glass);
             border: 1px solid var(--glass-border);
-            padding: 20px;
-            border-radius: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            padding: 20px; border-radius: 15px;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
             opacity: 0.5;
         }
 
-        .side-project span { color: var(--mint); text-transform: uppercase; font-size: 0.75rem; font-weight: bold; }
-        .side-project em { font-size: 0.7rem; color: #666; margin-top: 5px; }
+        .side-project span { color:var(--mint); text-transform:uppercase; font-size:0.75rem; font-weight:bold; }
+        .side-project em { font-size:0.7rem; color:#666; margin-top:5px; }
 
         .cta {
             background: linear-gradient(135deg, var(--cyan), var(--mint));
-            color: var(--dark);
-            padding: 18px 40px;
-            border-radius: 12px;
-            font-weight: bold;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 50px;
-            transition: transform 0.3s ease;
+            color: var(--dark); padding: 18px 40px;
+            border-radius: 12px; font-weight: bold;
+            text-decoration: none; display: inline-block;
+            margin-top: 50px; transition: transform 0.3s;
         }
-
         .cta:hover { transform: translateY(-3px); }
 
         .discord-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 25px;
-            padding: 12px 20px;
-            background: rgba(88, 101, 242, 0.1);
-            border: 1px solid rgba(88, 101, 242, 0.4);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 10px;
-            font-size: 0.9rem;
+            display: inline-flex; align-items: center; gap: 10px;
+            margin-top: 25px; padding: 12px 20px;
+            background: rgba(88,101,242,0.1);
+            border: 1px solid rgba(88,101,242,0.4);
+            color: #fff; text-decoration: none;
+            border-radius: 10px; font-size: 0.9rem;
         }
 
-        footer { padding: 40px; text-align: center; font-size: 0.8rem; color: #444; border-top: 1px solid var(--glass); }
+        /* ── FOOTER ── */
+        footer { padding:40px; text-align:center; font-size:0.8rem; color:#444; border-top:1px solid var(--glass); }
+
+        /* ── ANIMATIONS ── */
+        .reveal { opacity:0; transform:translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal.visible { opacity:1; transform:translateY(0); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            section { padding: 60px 6% 60px 6%; }
+        }
 
         @media (max-width: 600px) {
             .grid-container { grid-template-columns: 1fr; }
             .main-project { grid-row: auto; }
-            .dream-card { border-radius: 18px; border-right: 1px solid rgba(92, 225, 230, 0.25); border-left: 4px solid var(--mint); }
+            .dream-card { padding: 30px 24px; border-radius: 16px; border-left: 3px solid var(--mint); }
+            .tagwords { gap: 14px; }
         }
-
-        .reveal { animation: fadeIn 1s ease forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <div class="bg-glow"></div>
+<div class="bg-glow"></div>
 
-    <header>
-        <div class="logo">DE LOEWE</div>
-        <button class="lang-switch" onclick="toggleLanguage()" id="langBtn">EN</button>
-    </header>
+<!-- FLOATING NAV -->
+<nav class="side-nav" id="sideNav">
+    <a href="#intro" class="active" data-nav="intro">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        <span data-i18n="nav-intro">Identité</span>
+    </a>
+    <a href="#histoire" data-nav="histoire">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        <span data-i18n="nav-histoire">Histoire</span>
+    </a>
+    <a href="#services" data-nav="services">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        <span data-i18n="nav-services">Services</span>
+    </a>
+</nav>
 
-    <main class="hero">
-        <div class="heart-icon" style="font-size: 2rem; margin-bottom: 10px;">💚</div>
+<header>
+    <div class="logo">DE LOEWE</div>
+    <button class="lang-switch" onclick="toggleLanguage()" id="langBtn">EN</button>
+</header>
 
-        <h1 class="reveal" data-i18n="hero-title">Ethics serving <br><span>the global market.</span></h1>
+<!-- SECTION 1 : INTRO -->
+<section id="intro">
+    <div class="brand-name reveal">DE LOEWE</div>
+    <div class="tagwords reveal">
+        <span data-i18n="tag-1">Éthique</span>
+        <span class="accent" data-i18n="tag-2">Humanité</span>
+        <span data-i18n="tag-3">Renouveau</span>
+    </div>
+</section>
 
-        <div class="dream-wrapper reveal">
-            <div class="dream-card">
-                <span class="dream-icon">🚂</span>
-                <span class="dream-label" data-i18n="dream-label">Notre vision</span>
-                <p data-i18n="dream-text">
-                    Il y a des passions qu'on ne choisit pas. Elles s'imposent, elles grandissent, elles finissent par tout traverser.<br><br>
-                    De Loewe est née de l'une d'elles — et de la conviction que ce qu'on aime profondément peut, un jour, <strong>servir à quelque chose de plus grand que soi.</strong><br><br>
-                    Bâtir des services <em>vrais</em>, attendus, utiles au quotidien. Et au bout du chemin, contribuer à ce rêve un peu fou : <strong>redonner au rail français la place qu'il mérite.</strong>
-                </p>
-            </div>
+<!-- SECTION 2 : HISTOIRE -->
+<section id="histoire">
+    <div class="dream-card reveal">
+        <span class="dream-label" data-i18n="dream-label">Notre histoire</span>
+        <p data-i18n="dream-text"></p>
+    </div>
+</section>
+
+<!-- SECTION 3 : SERVICES -->
+<section id="services">
+    <div class="heart-icon reveal" style="font-size:2rem;margin-bottom:10px;">💚</div>
+    <h1 class="reveal" data-i18n="hero-title">Ethics serving <br><span>the global market.</span></h1>
+
+    <div class="grid-container reveal">
+        <div class="main-project">
+            <span class="ethical-tag" data-i18n="tag-custom">Tailor-made</span>
+            <h3 data-i18n="grid-title">Web & Discord</h3>
+            <p data-i18n="grid-desc">Development of bots and websites created by humans, for humans. No soulless automation.</p>
+            <a href="https://discord.gg/9hhWPXvgqv" target="_blank" class="discord-btn">
+                <svg width="20" viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.06,72.06,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.71,32.65-1.82,56.6.39,80.21a105.73,105.73,0,0,0,32.22,16.15,77.7,77.7,0,0,0,7.37-12,67.65,67.65,0,0,1-11.9-5.69c.91-.66,1.8-1.34,2.66-2a75.6,75.6,0,0,0,65.8,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-11.9,5.69,77.67,77.67,0,0,0,7.37,12,105.54,105.54,0,0,0,32.22-16.14C130.34,50.67,125.75,26.92,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5.07-12.69,11.45-12.69S54.18,46,53.92,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5.07-12.69,11.44-12.69S96.14,46,95.89,53,90.71,65.69,84.69,65.69Z"/></svg>
+                <span data-i18n="btn-discord">Join Discord</span>
+            </a>
         </div>
-
-        <div class="grid-container reveal">
-            <div class="main-project">
-                <span class="ethical-tag" data-i18n="tag-custom">Tailor-made</span>
-                <h3 data-i18n="grid-title">Web & Discord</h3>
-                <p data-i18n="grid-desc">Development of bots and websites created by humans, for humans. No soulless automation.</p>
-                
-                <a href="https://discord.gg/9hhWPXvgqv" target="_blank" class="discord-btn">
-                    <svg width="20" viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.06,72.06,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.71,32.65-1.82,56.6.39,80.21a105.73,105.73,0,0,0,32.22,16.15,77.7,77.7,0,0,0,7.37-12,67.65,67.65,0,0,1-11.9-5.69c.91-.66,1.8-1.34,2.66-2a75.6,75.6,0,0,0,65.8,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-11.9,5.69,77.67,77.67,0,0,0,7.37,12,105.54,105.54,0,0,0,32.22-16.14C130.34,50.67,125.75,26.92,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5.07-12.69,11.45-12.69S54.18,46,53.92,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5.07-12.69,11.44-12.69S96.14,46,95.89,53,90.71,65.69,84.69,65.69Z"/></svg>
-                    <span data-i18n="btn-discord">Join Discord</span>
-                </a>
-            </div>
-
-            <div class="side-project">
-                <span data-i18n="side-1">Sustainable Logistics</span>
-                <em data-i18n="coming-soon">Coming soon...</em>
-            </div>
-
-            <div class="side-project">
-                <span data-i18n="side-2">Human Proximity</span>
-                <em data-i18n="coming-soon">Coming soon...</em>
-            </div>
+        <div class="side-project">
+            <span data-i18n="side-1">Sustainable Logistics</span>
+            <em data-i18n="coming-soon">Coming soon...</em>
         </div>
+        <div class="side-project">
+            <span data-i18n="side-2">Human Proximity</span>
+            <em data-i18n="coming-soon">Coming soon...</em>
+        </div>
+    </div>
 
-        <a href="mailto:remi.de.loewe@proton.me" class="cta reveal" data-i18n="cta-main">Start a project</a>
-    </main>
+    <a href="mailto:remi.de.loewe@proton.me" class="cta reveal" data-i18n="cta-main">Start a project</a>
+</section>
 
-    <footer>
-        &copy; 2026 DE LOEWE. <span data-i18n="footer-rights">All rights reserved.</span>
-    </footer>
+<footer>
+    &copy; 2026 DE LOEWE. <span data-i18n="footer-rights">All rights reserved.</span>
+</footer>
 
-    <script>
-        const translations = {
-            fr: {
-                "hero-title": "L'éthique au service <br><span>du grand marché.</span>",
-                "tag-custom": "Sur-mesure",
-                "grid-title": "Web & Discord",
-                "grid-desc": "Développement de bots et sites web créés par des humains, pour des humains. Pas d'automatisation sans âme.",
-                "btn-discord": "Rejoindre le Discord",
-                "side-1": "Logistique durable",
-                "side-2": "Proximité humaine",
-                "coming-soon": "Bientôt...",
-                "cta-main": "Lancer un projet",
-                "footer-rights": "Tous droits réservés.",
-                "dream-label": "Notre vision",
-                "dream-text": "Il y a des passions qu'on ne choisit pas. Elles s'imposent, elles grandissent, elles finissent par tout traverser.<br><br>De Loewe est née de l'une d'elles — et de la conviction que ce qu'on aime profondément peut, un jour, <strong>servir à quelque chose de plus grand que soi.</strong><br><br>Bâtir des services <em>vrais</em>, attendus, utiles au quotidien. Et au bout du chemin, contribuer à ce rêve un peu fou : <strong>redonner au rail français la place qu'il mérite.</strong>"
-            },
-            en: {
-                "hero-title": "Ethics serving <br><span>the global market.</span>",
-                "tag-custom": "Tailor-made",
-                "grid-title": "Web & Discord",
-                "grid-desc": "Development of bots and websites created by humans, for humans. No soulless automation.",
-                "btn-discord": "Join Discord",
-                "side-1": "Sustainable Logistics",
-                "side-2": "Human Proximity",
-                "coming-soon": "Coming soon...",
-                "cta-main": "Start a project",
-                "footer-rights": "All rights reserved.",
-                "dream-label": "Our vision",
-                "dream-text": "Some passions don't ask for permission. They grow, they spread, they end up shaping everything.<br><br>De Loewe was born from one of them — and from the belief that what we love deeply can, one day, <strong>serve something greater than ourselves.</strong><br><br>Building services that are <em>real</em>, needed, genuinely useful. And at the end of the road, contributing to one quietly bold dream: <strong>giving French rail the place it deserves.</strong>"
-            }
-        };
+<script>
+const translations = {
+    fr: {
+        "nav-intro": "Identité",
+        "nav-histoire": "Histoire",
+        "nav-services": "Services",
+        "hero-title": "L'éthique au service <br><span>du grand marché.</span>",
+        "tag-custom": "Sur-mesure",
+        "tag-1": "Éthique",
+        "tag-2": "Humanité",
+        "tag-3": "Renouveau",
+        "grid-title": "Web & Discord",
+        "grid-desc": "Développement de bots et sites web créés par des humains, pour des humains. Pas d'automatisation sans âme.",
+        "btn-discord": "Rejoindre le Discord",
+        "side-1": "Logistique durable",
+        "side-2": "Proximité humaine",
+        "coming-soon": "Bientôt...",
+        "cta-main": "Lancer un projet",
+        "footer-rights": "Tous droits réservés.",
+        "dream-label": "Notre histoire",
+        "dream-text": "Il y a des passions qu'on ne choisit pas. Elles grandissent, colonisent tout, deviennent une raison de se lever le matin.<br><br>De Loewe est née d'une chaîne YouTube consacrée au ferroviaire — et de la conviction que cette passion, <strong>partagée avec des milliers de personnes</strong>, peut un jour donner naissance à quelque chose de plus grand.<br><br>Des services <em>vrais</em>, pensés pour les gens, utiles au quotidien de ceux qui en ont besoin. Et au bout du chemin, un rêve qui nous tient debout : <strong>faire revivre le fret ferroviaire français.</strong>"
+    },
+    en: {
+        "nav-intro": "Identity",
+        "nav-histoire": "Story",
+        "nav-services": "Services",
+        "hero-title": "Ethics serving <br><span>the global market.</span>",
+        "tag-custom": "Tailor-made",
+        "tag-1": "Ethics",
+        "tag-2": "Humanity",
+        "tag-3": "Renewal",
+        "grid-title": "Web & Discord",
+        "grid-desc": "Development of bots and websites created by humans, for humans. No soulless automation.",
+        "btn-discord": "Join Discord",
+        "side-1": "Sustainable Logistics",
+        "side-2": "Human Proximity",
+        "coming-soon": "Coming soon...",
+        "cta-main": "Start a project",
+        "footer-rights": "All rights reserved.",
+        "dream-label": "Our story",
+        "dream-text": "Some passions don't ask for permission. They grow, take over everything, become a reason to get up in the morning.<br><br>De Loewe was born from a YouTube channel devoted to railways — and from the conviction that this passion, <strong>shared with thousands of people</strong>, can one day give rise to something greater.<br><br>Services that are <em>real</em>, designed for people, genuinely useful to those who need them. And at the end of the road, a dream that keeps us going: <strong>bringing French rail freight back to life.</strong>"
+    }
+};
 
-        let currentLang = localStorage.getItem('lang') || 'fr';
+let currentLang = localStorage.getItem('lang') || 'fr';
 
-        function updateContent() {
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                el.innerHTML = translations[currentLang][key];
-            });
-            document.getElementById('langBtn').innerText = currentLang === 'fr' ? 'EN' : 'FR';
+function updateContent() {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[currentLang][key] !== undefined)
+            el.innerHTML = translations[currentLang][key];
+    });
+    document.getElementById('langBtn').innerText = currentLang === 'fr' ? 'EN' : 'FR';
+}
+
+function toggleLanguage() {
+    currentLang = currentLang === 'fr' ? 'en' : 'fr';
+    localStorage.setItem('lang', currentLang);
+    updateContent();
+}
+
+updateContent();
+
+// ── SCROLL REVEAL ──
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+revealEls.forEach(el => observer.observe(el));
+
+// ── ACTIVE NAV ──
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.side-nav a');
+
+const sectionObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            navLinks.forEach(a => a.classList.remove('active'));
+            const active = document.querySelector(`.side-nav a[data-nav="${e.target.id}"]`);
+            if (active) active.classList.add('active');
         }
+    });
+}, { threshold: 0.4 });
+sections.forEach(s => sectionObserver.observe(s));
 
-        function toggleLanguage() {
-            currentLang = currentLang === 'fr' ? 'en' : 'fr';
-            localStorage.setItem('lang', currentLang);
-            updateContent();
-        }
+// ── MOBILE NAV : apparaît après arrêt du scroll ──
+const mobileNav = document.getElementById('sideNav');
+let scrollTimer;
+window.addEventListener('scroll', () => {
+    if (window.innerWidth <= 768) {
+        mobileNav.classList.remove('visible');
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(() => mobileNav.classList.add('visible'), 600);
+    }
+}, { passive: true });
 
-        updateContent();
-    </script>
+// Afficher immédiatement au chargement sur mobile
+if (window.innerWidth <= 768) {
+    setTimeout(() => mobileNav.classList.add('visible'), 800);
+}
+</script>
 </body>
 </html>
