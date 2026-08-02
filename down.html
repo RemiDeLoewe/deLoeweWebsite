@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>de Loewe</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Inter, system-ui, sans-serif;
+            background:
+                radial-gradient(circle at top, #1c3359 0%, #132544 35%, #0b1629 100%);
+            color: white;
+        }
+
+        .card {
+            width: min(92%, 540px);
+            background: rgba(20, 28, 45, .82);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 26px;
+            padding: 45px;
+            text-align: center;
+            box-shadow:
+                0 30px 80px rgba(0,0,0,.45);
+        }
+
+        img.logo {
+            width: 360px;
+            max-width: 100%;
+            margin-bottom: 45px;
+        }
+
+        /* --- Bandeau "serveur injoignable" (remplace le bouton HomeCloud) --- */
+        .status {
+            background: rgba(255, 90, 110, .06);
+            border: 1px solid rgba(255, 90, 110, .35);
+            border-radius: 14px;
+            padding: 20px 22px;
+            color: #ffd7dc;
+            font-size: 16px;
+            line-height: 1.55;
+        }
+        .status .dot {
+            color: #ff5a6e;
+            margin-right: 8px;
+        }
+        .status .sub {
+            display: block;
+            margin-top: 8px;
+            color: #b7c6dc;
+            font-size: 13px;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 17px;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 17px;
+            font-weight: 600;
+            transition: .25s;
+            text-decoration: none;
+        }
+
+        hr {
+            margin: 38px 0;
+            border: none;
+            border-top: 1px solid rgba(255,255,255,.08);
+        }
+
+        p {
+            color: #b7c6dc;
+            margin-bottom: 22px;
+            line-height: 1.6;
+        }
+
+        .secondary {
+            background: rgba(255,255,255,.05);
+            color: white;
+            border: 1px solid rgba(255,255,255,.08);
+        }
+
+        .secondary:hover {
+            background: rgba(255,255,255,.09);
+        }
+
+        /* ---------- Popup (inchangé) ---------- */
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.55);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .popup {
+            width: 400px;
+            max-width: 92%;
+            background: #132544;
+            border-radius: 22px;
+            padding: 35px;
+            border: 1px solid rgba(255,255,255,.08);
+            animation: popup .25s ease;
+        }
+
+        @keyframes popup {
+            from {
+                opacity:0;
+                transform:translateY(20px) scale(.96);
+            }
+            to {
+                opacity:1;
+                transform:none;
+            }
+        }
+
+        .popup img{
+            width:180px;
+            display:block;
+            margin:auto;
+            margin-bottom:30px;
+        }
+
+        .popup h2{
+            text-align:center;
+            margin-bottom:25px;
+            font-weight:600;
+        }
+
+        input{
+            width:100%;
+            margin-bottom:15px;
+            padding:15px;
+            border:none;
+            outline:none;
+            border-radius:12px;
+            background:#1b335a;
+            color:white;
+            font-size:15px;
+        }
+
+        .popup button{
+            width:100%;
+            padding:15px;
+            border:none;
+            border-radius:12px;
+            cursor:pointer;
+            background:linear-gradient(135deg,#1fd0a0,#54d8ff);
+            color:white;
+            font-size:16px;
+            font-weight:600;
+        }
+
+        .close{
+            margin-top:15px !important;
+            background:transparent !important;
+            border:1px solid rgba(255,255,255,.1) !important;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <!-- IMPORTANT : URL ABSOLUE vers le logo servi par GitHub (deloewe.com),
+         PAS un chemin relatif. Sinon, serveur éteint = logo cassé. -->
+    <img class="logo" src="https://deloewe.com/public/logo.png" alt="de Loewe">
+
+    <!-- Remplace le bouton HomeCloud : message "injoignable" -->
+    <div class="status">
+        <span class="dot">●</span>Ce serveur est momentanément injoignable.
+        <span class="sub">Le service sera de retour sous peu. Merci de réessayer plus tard.</span>
+    </div>
+
+    <hr>
+
+    <!-- Faux accès "autres services" (pour taquiner tes sœurs) -->
+    <p>
+        Connectez-vous pour accéder au reste des services.
+    </p>
+
+    <button class="btn secondary" onclick="login()">
+        Connexion
+    </button>
+
+</div>
+
+
+<div class="overlay" id="overlay">
+
+    <div class="popup">
+
+        <img src="https://deloewe.com/public/logo.png" alt="de Loewe">
+
+        <h2>Connexion</h2>
+
+        <input
+            type="text"
+            placeholder="Nom d'utilisateur">
+
+        <input
+            type="password"
+            placeholder="Mot de passe">
+
+        <button>
+            Se connecter
+        </button>
+
+        <button
+            class="close"
+            onclick="closeLogin()">
+            Fermer
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+function login(){
+    document.getElementById("overlay").style.display="flex";
+}
+
+function closeLogin(){
+    document.getElementById("overlay").style.display="none";
+}
+
+document.getElementById("overlay").addEventListener("click",e=>{
+    if(e.target.id==="overlay")
+        closeLogin();
+});
+
+</script>
+
+</body>
+</html>
