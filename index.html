@@ -43,6 +43,27 @@
             margin-bottom: 45px;
         }
 
+        /* --- Bandeau "serveur injoignable" (remplace le bouton HomeCloud) --- */
+        .status {
+            background: rgba(255, 90, 110, .06);
+            border: 1px solid rgba(255, 90, 110, .35);
+            border-radius: 14px;
+            padding: 20px 22px;
+            color: #ffd7dc;
+            font-size: 16px;
+            line-height: 1.55;
+        }
+        .status .dot {
+            color: #ff5a6e;
+            margin-right: 8px;
+        }
+        .status .sub {
+            display: block;
+            margin-top: 8px;
+            color: #b7c6dc;
+            font-size: 13px;
+        }
+
         .btn {
             display: inline-block;
             width: 100%;
@@ -54,16 +75,6 @@
             font-weight: 600;
             transition: .25s;
             text-decoration: none;
-        }
-
-        .primary {
-            background: linear-gradient(135deg,#1fd0a0,#54d8ff);
-            color: white;
-        }
-
-        .primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(84,216,255,.3);
         }
 
         hr {
@@ -88,16 +99,23 @@
             background: rgba(255,255,255,.09);
         }
 
-        /* ---------- Popup ---------- */
+        /* ---------- Popup (inchangé) ---------- */
 
         .overlay {
             position: fixed;
             inset: 0;
             background: rgba(0,0,0,.55);
-            display: none;
+            backdrop-filter: blur(5px);
+            display: flex;
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(5px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .25s ease, visibility .25s ease;
+        }
+        .overlay.open {
+            opacity: 1;
+            visibility: visible;
         }
 
         .popup {
@@ -107,19 +125,21 @@
             border-radius: 22px;
             padding: 35px;
             border: 1px solid rgba(255,255,255,.08);
-            animation: popup .25s ease;
+            transform: translateY(20px) scale(.96);
+            transition: transform .25s ease;
         }
-
-        @keyframes popup {
-            from {
-                opacity:0;
-                transform:translateY(20px) scale(.96);
-            }
-            to {
-                opacity:1;
-                transform:none;
-            }
+        .overlay.open .popup {
+            transform: none;
         }
+                .login-error {
+            display: none;
+            margin-top: 12px;
+            color: #ffd7dc;
+            font-size: 14px;
+            text-align: center;
+        }
+        .login-error .dot { color: #ff5a6e; margin-right: 6px; }
+        .login-error.show { display: block; }
 
         .popup img{
             width:180px;
@@ -194,7 +214,7 @@
 
     <div class="popup">
 
-        <img src="./public/logo.png">
+        <img src="https://deloewe.com/public/logo.png" alt="de Loewe">
 
         <h2>Connexion</h2>
 
@@ -209,6 +229,13 @@
         <button>
             Se connecter
         </button>
+        <button onclick="Connexion()">
+                Se connecter
+            </button>
+            
+            <div id="loginError" class="login-error">
+                <span class="dot">●</span>Identifiants incorrects.
+            </div>
 
         <button
             class="close"
@@ -221,21 +248,33 @@
 </div>
 
 <script>
-
 function login(){
-    document.getElementById("overlay").style.display="flex";
+
+    document.getElementById("overlay").classList.add("open");
+
 }
 
 function closeLogin(){
-    document.getElementById("overlay").style.display="none";
+
+    document.getElementById("overlay").classList.remove("open");
+
+    document.getElementById("loginError").classList.remove("show");
+
 }
 
-document.getElementById("overlay").addEventListener("click",e=>{
-    if(e.target.id==="overlay")
-        closeLogin();
+document.getElementById("overlay").addEventListener("click", e=>{
+
+    if(e.target.id==="overlay") closeLogin();
+
 });
 
+function Connexion(){
+
+    document.getElementById("loginError").classList.add("show");
+
+}
 </script>
 
 </body>
 </html>
+
