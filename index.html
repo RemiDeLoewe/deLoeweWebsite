@@ -201,6 +201,11 @@ main {
 <footer class="pied">
     © de Loewe
 </footer>
-
+<script>
+(function () {
+    var u = "https://status.deloewe.com/hit?s=deloewe";
+    try { navigator.sendBeacon ? navigator.sendBeacon(u) : fetch(u, { method: "POST", mode: "no-cors", keepalive: true }); } catch (e) {}
+})();
+</script>
 </body>
 </html>
