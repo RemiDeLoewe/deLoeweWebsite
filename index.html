@@ -4,213 +4,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>de Loewe · Hébergement et services auto-hébergés</title>
 <meta name="description" content="De Loewe : HomeCloud personnel et services auto-hébergés.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@300;400;700;900&family=Overpass+Mono:wght@600&display=swap" rel="stylesheet">
 
 <style>
 /* ================================================================
    COULEURS (les mêmes que HomeCloud)
    ================================================================ */
 :root {
-    --fond:        #0e1a2e;
-    --fond-entete: #0a1424;
-    --panneau:     #13233b;
-    --panneau-2:   #182b47;
-    --ligne:       #233756;
-    --texte:       #e8edf4;
-    --discret:     #8ea3bd;
-    --turquoise:   #40e0d0;
-    --turquoise-2: #2bc4b3;
+    --noir:    #000;
+    --blanc:   #fff;
+    --doux:    #6b6b6b;
+    --ligne:   #d9d9d9;
+    --survol:  #f3f3f3;
+    --rouge:   #c62f45;
+    --vert:    #1f8a4c;
+    --accent:  #1fb5a5;
+    --marge:   clamp(16px, 4vw, 56px);
+    --mono:    "Overpass Mono", ui-monospace, Menlo, Consolas, monospace;
+    --ressort: cubic-bezier(.2, .7, .2, 1);
 }
-
-* { box-sizing: border-box; }
-
-body {
-    margin: 0;
-    font-family: system-ui, "Segoe UI", Ubuntu, "Noto Sans", Arial, sans-serif;
-    font-size: 15px;
-    color: var(--texte);
-    background: var(--fond);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-a { color: var(--turquoise); }
-
-
-/* ---------- Header ---------- */
-.entete {
-    background: var(--fond-entete);
-    border-bottom: 1px solid var(--ligne);
-}
-.entete-dedans {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 10px 24px;
-    display: flex;
-    align-items: center;
-    gap: 28px;
-}
-.marque img {
-    height: 34px;
-    display: block;
-}
-.nav {
-    display: flex;
-    gap: 4px;
-}
-.nav a {
-    padding: 8px 10px;
-    color: var(--discret);
-    text-decoration: none;
-    font-weight: 500;
-    border-bottom: 2px solid transparent;
-}
-.nav a:hover { color: var(--texte); }
-.nav .actif {
-    color: var(--texte);
-    border-bottom-color: var(--turquoise);
-}
-.entete .btn { margin-left: auto; }
-
-
-/* ---------- Boutons ---------- */
-.btn {
-    display: inline-block;
-    padding: 9px 16px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    text-decoration: none;
-    background: var(--turquoise);
-    color: #0b1a2c;
-    transition: background .15s;
-}
-.btn:hover { background: var(--turquoise-2); }
-
-
-/* ---------- Contenu ---------- */
-main {
-    flex: 1;
-    width: 100%;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 56px 24px 40px;
-}
-.intro h1 {
-    margin: 0 0 10px;
-    font-size: 30px;
-    font-weight: 700;
-}
-.intro p {
-    margin: 0;
-    max-width: 560px;
-    color: var(--discret);
-    line-height: 1.6;
-}
-
-.titre-section {
-    margin: 44px 0 14px;
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .6px;
-    color: var(--discret);
-}
-
-.services {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-}
-.service {
-    background: var(--panneau);
-    border: 1px solid var(--ligne);
-    border-radius: 10px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-.service h2 {
-    margin: 0;
-    font-size: 18px;
-}
-.service p {
-    margin: 0 0 6px;
-    color: var(--discret);
-    font-size: 14px;
-    line-height: 1.55;
-}
-.service .btn { align-self: flex-start; }
-
-
-/* ---------- Pied de page ---------- */
-.pied {
-    max-width: 1000px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 10px 24px 30px;
-    font-size: 12px;
-    color: var(--discret);
-}
-
-
-/* ---------- Téléphone ---------- */
-@media (max-width: 600px) {
-    .entete-dedans { padding: 10px 14px; gap: 14px; }
-    .nav { display: none; }
-    main { padding: 36px 16px 30px; }
-    .intro h1 { font-size: 24px; }
-}
-</style>
-</head>
-
-<body><div id="bandeauMaintenance" style="background:#3a1a26; border-bottom:1px solid #e8667a; color:#ffd7dc; padding:10px 16px; text-align:center; font-size:14px; font-weight:600;">
-    ⚠ Maintenance matérielle prévue le 17 novembre de 17h à 22h : des interruptions de service sont à prévoir.
-</div>
-<script>
-(function () {
-    var FIN_MAINTENANCE = new Date("2026-11-17T20:00:00+01:00");
-    if (new Date() > FIN_MAINTENANCE) document.getElementById("bandeauMaintenance").remove();
-})();
-</script>
-
-<header class="entete">
-    <div class="entete-dedans">
-        <a class="marque" href="./">
-            <img src="./public/logo.png" alt="de Loewe">
-        </a>
-        <nav class="nav">
-            <a href="./" class="actif">Accueil</a>
-            <a href="https://homecloud.deloewe.com">HomeCloud</a>
-        </nav>
-        <a class="btn" href="https://homecloud.deloewe.com">Se connecter</a>
-    </div>
-</header>
-
-<main>
-    <section class="intro">
-
-    <p class="titre-section">Services</p>
-
-    <div class="services">
-        <div class="service">
-            <h2>☁️ HomeCloud</h2>
-            <p>Accédez à votre espace de stockage personnel : fichiers, dossiers, musique.</p>
-            <a class="btn" href="https://homecloud.deloewe.com">Aller sur HomeCloud</a>
-        </div>
-    </div>
-</main>
-
-<footer class="pied">
-    © de Loewe
-</footer>
-<script>
-(function () {
-    var u = "https://status.deloewe.com/hit?s=deloewe";
-    try { navigator.sendBeacon ? navigator.sendBeacon(u) : fetch(u, { method: "POST", mode: "no-cors", keepalive: true }); } catch (e) {}
-})();
-</script>
-</body>
-</html>
+@media (prefers-color-scheme: dark) {
+    :root {
+        --noir:   #fff;
+        --blanc:  #0a0a0a;
+        --doux:   #9a9a9a;
