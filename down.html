@@ -80,6 +80,41 @@ main {
     border-radius: 10px;
     padding: 24px;
 }
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>de Loewe · Serveur injoignable</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@300;400;700;900&family=Overpass+Mono:wght@600&display=swap" rel="stylesheet">
+
+<style>
+/* ================================================================
+   COULEURS (les mêmes que HomeCloud)
+   ================================================================ */
+:root {
+    --noir:    #000;
+    --blanc:   #fff;
+    --doux:    #6b6b6b;
+    --ligne:   #d9d9d9;
+    --survol:  #f3f3f3;
+    --rouge:   #c62f45;
+    --vert:    #1f8a4c;
+    --accent:  #1fb5a5;
+    --marge:   clamp(16px, 4vw, 56px);
+    --mono:    "Overpass Mono", ui-monospace, Menlo, Consolas, monospace;
+    --ressort: cubic-bezier(.2, .7, .2, 1);
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --noir:   #fff;
+        --blanc:  #0a0a0a;
+        --doux:   #9a9a9a;
+        --ligne:  #2e2e2e;
 .etat {
     display: flex;
     align-items: center;
@@ -135,44 +170,7 @@ main {
 .btn-discret {
     background: transparent;
     border-color: var(--ligne);
-    color: var(--discret);
-}
-.btn-discret:hover {
-    background: var(--panneau-2);
-    color: var(--texte);
-}
-
-
-/* ---------- Pied de page ---------- */
-.pied {
-    max-width: 1000px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 10px 24px 30px;
-    font-size: 12px;
-    color: var(--discret);
-}
-</style>
-</head>
-
-<header class="entete">
-    <div class="entete-dedans">
-        <!-- IMPORTANT : URL ABSOLUE vers le logo servi par GitHub (deloewe.com),
-             PAS un chemin relatif. Sinon, serveur éteint = logo cassé. -->
-        <a class="marque" href="https://deloewe.com">
-            <img src="https://deloewe.com/public/logo.png" alt="de Loewe">
-        </a>
-        <nav class="nav">
-            <a href="https://deloewe.com">← Retour au site</a>
-        </nav>
-    </div>
-</header>
-
-<main>
-    <div class="carte">
-        <p class="etat">Hors ligne</p>
-        <h1>Ce serveur est momentanément injoignable.</h1>
-        <p>Le service sera de retour sous peu. Merci de réessayer plus tard,
+    <p>Le service sera de retour sous peu. Merci de réessayer plus tard,
            ou de contacter un administrateur du serveur.</p>
 
         <div class="actions">
