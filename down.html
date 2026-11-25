@@ -4,141 +4,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>de Loewe · Serveur injoignable</title>
-
-<style>
-/* ================================================================
-   COULEURS (les mêmes que HomeCloud)
-   ================================================================ */
-:root {
-    --fond:        #0e1a2e;
-    --fond-entete: #0a1424;
-    --panneau:     #13233b;
-    --panneau-2:   #182b47;
-    --ligne:       #233756;
-    --texte:       #e8edf4;
-    --discret:     #8ea3bd;
-    --turquoise:   #40e0d0;
-    --turquoise-2: #2bc4b3;
-    --rouge:       #e8667a;
-}
-
-* { box-sizing: border-box; }
-
-body {
-    margin: 0;
-    font-family: system-ui, "Segoe UI", Ubuntu, "Noto Sans", Arial, sans-serif;
-    font-size: 15px;
-    color: var(--texte);
-    background: var(--fond);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-
-/* ---------- Header ---------- */
-.entete {
-    background: var(--fond-entete);
-    border-bottom: 1px solid var(--ligne);
-}
-.entete-dedans {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 10px 24px;
-    display: flex;
-    align-items: center;
-    gap: 28px;
-}
-.marque img {
-    height: 34px;
-    display: block;
-}
-.nav a {
-    padding: 8px 10px;
-    color: var(--discret);
-    text-decoration: none;
-    font-weight: 500;
-}
-.nav a:hover { color: var(--texte); }
-
-
-/* ---------- Contenu ---------- */
-main {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-}
-.carte {
-    width: 100%;
-    max-width: 460px;
-    background: var(--panneau);
-    border: 1px solid var(--ligne);
-    border-left: 3px solid var(--rouge);
-    border-radius: 10px;
-    padding: 24px;
-}
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light dark">
-<title>de Loewe · Serveur injoignable</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@300;400;700;900&family=Overpass+Mono:wght@600&display=swap" rel="stylesheet">
-
-<style>
-/* ================================================================
-   COULEURS (les mêmes que HomeCloud)
-   ================================================================ */
-:root {
-    --noir:    #000;
-    --blanc:   #fff;
-    --doux:    #6b6b6b;
-    --ligne:   #d9d9d9;
-    --survol:  #f3f3f3;
-    --rouge:   #c62f45;
-    --vert:    #1f8a4c;
-    --accent:  #1fb5a5;
-    --marge:   clamp(16px, 4vw, 56px);
-    --mono:    "Overpass Mono", ui-monospace, Menlo, Consolas, monospace;
-    --ressort: cubic-bezier(.2, .7, .2, 1);
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --noir:   #fff;
-        --blanc:  #0a0a0a;
-        --doux:   #9a9a9a;
-        --ligne:  #2e2e2e;
-.etat {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 0 0 6px;
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .6px;
-    color: var(--rouge);
-}
-.etat::before {
-    content: "";
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--rouge);
-}
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <title>de Loewe · Serveur injoignable</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -210,6 +75,7 @@ body > *:not(#fond):not(script) { position: relative; z-index: 1; }
     max-width: 1280px;
     margin: 0 auto;
     padding: 16px var(--marge);
+    min-height: 70px;          /* même hauteur que l'en-tête de HomeCloud (71 px avec la bordure) */
     display: flex;
     align-items: center;
     gap: 32px;
@@ -350,6 +216,12 @@ main {
     color: var(--doux);
     line-height: 1.55;
 }
+.carte .retour {
+    margin-top: 14px;
+    color: var(--noir);
+    font-family: var(--mono);
+    font-size: 14px;
+}
 .actions {
     display: flex;
     flex-wrap: wrap;
@@ -387,10 +259,11 @@ main {
 
 <main>
     <div class="carte">
-        <p class="etat">Hors ligne</p>
-        <h1>Ce serveur est momentanément injoignable.</h1>
-        <p>Le service sera de retour sous peu. Merci de réessayer plus tard,
+        <p class="etat" id="m-etat">Hors ligne</p>
+        <h1 id="m-titre">Ce serveur est momentanément injoignable.</h1>
+        <p id="m-texte">Le service sera de retour sous peu. Merci de réessayer plus tard,
            ou de contacter un administrateur du serveur.</p>
+        <p class="retour" id="m-retour" hidden></p>
 
         <div class="actions">
             <button class="btn" onclick="location.reload()"><svg class="ic tourne" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg>Réessayer</button>
@@ -402,6 +275,37 @@ main {
 <footer class="pied">
     <div class="pied-dedans">© de Loewe</div>
 </footer>
+
+<!-- Message choisi sur status.deloewe.com (onglet HomeCloud).
+     Si status ne répond pas (serveur entier éteint), on garde le texte ci-dessus.
+     Le texte est inséré avec textContent : jamais interprété comme du HTML. -->
+<script>
+(function () {
+    const ctrl = new AbortController();
+    setTimeout(() => ctrl.abort(), 4000);
+    fetch("https://status.deloewe.com/public/message", { cache: "no-store", signal: ctrl.signal })
+        .then(r => r.ok ? r.json() : null)
+        .then(d => {
+            const m = d && d.message;
+            if (!m || !m.titre) return;
+            if (m.etat) document.getElementById("m-etat").textContent = m.etat;
+            document.getElementById("m-titre").textContent = m.titre;
+            document.getElementById("m-texte").textContent = m.texte || "";
+            document.title = "de Loewe · " + (m.etat || "Serveur injoignable");
+            if (m.retour) {
+                const t = new Date(m.retour);
+                if (!isNaN(t)) {
+                    const el = document.getElementById("m-retour");
+                    const jour = t.toDateString() === new Date().toDateString() ? "aujourd'hui"
+                        : t.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
+                    el.textContent = "Retour prévu : " + jour + " à " + t.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+                    el.hidden = false;
+                }
+            }
+        })
+        .catch(() => {});
+})();
+</script>
 
 <!-- Sur cette page, les paquets sont rouges et se perdent en route -->
 <script>window.FOND_OPTIONS = { couleur: "--rouge", coupure: true };</script>
