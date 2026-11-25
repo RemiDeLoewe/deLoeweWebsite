@@ -33,3 +33,406 @@
         --noir:   #fff;
         --blanc:  #0a0a0a;
         --doux:   #9a9a9a;
+        --ligne:  #2e2e2e;
+        --survol: #171717;
+        --rouge:  #ff5c74;
+        --vert:   #3cc47a;
+        --accent: #40e0d0;
+        color-scheme: dark;
+    }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    margin: 0;
+    font-family: "Overpass", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--noir);
+    background: var(--blanc);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+a { color: inherit; }
+::selection { background: var(--accent); color: #000; }
+:focus-visible { outline: 3px solid var(--noir); outline-offset: 3px; }
+
+/* ---------- Fond animé ---------- */
+#fond { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+body > *:not(#fond):not(script) { position: relative; z-index: 1; }
+
+/* ---------- Header ---------- */
+.entete {
+    position: sticky;
+    top: 0;
+    z-index: 10 !important;
+    background: var(--blanc);
+    border-bottom: 1px solid var(--ligne);
+}
+.entete-dedans {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 16px var(--marge);
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+.marque { display: flex; align-items: center; text-decoration: none; }
+.marque img { height: 32px; display: block; }
+.nav { display: flex; align-items: center; gap: 22px; }
+.nav a {
+    position: relative;
+    padding: 6px 0 3px;
+    color: var(--doux);
+    font-weight: 700;
+    text-decoration: none;
+    transition: color .2s;
+}
+.nav a::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -1px;
+    height: 2px;
+    background: var(--noir);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform .3s var(--ressort);
+}
+.nav a:hover, .nav .actif { color: var(--noir); }
+.nav a:hover::after, .nav .actif::after { transform: scaleX(1); transform-origin: left; }
+
+/* ---------- Boutons : le fond se remplit de gauche à droite ---------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 20px 9px;
+    border: 2px solid var(--noir);
+    border-radius: 0;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    color: var(--blanc);
+    background: linear-gradient(var(--blanc), var(--blanc)) no-repeat 0 0 / 0% 100%, var(--noir);
+    transition: background-size .3s var(--ressort), color .2s, transform .1s;
+}
+.btn:hover { background-size: 100% 100%; color: var(--noir); }
+.btn:active { transform: translateY(1px); }
+.btn-discret {
+    color: var(--noir);
+    background: linear-gradient(var(--noir), var(--noir)) no-repeat 0 0 / 0% 100%, var(--blanc);
+}
+.btn-discret:hover { color: var(--blanc); }
+.btn .ic { width: 16px; height: 16px; transition: transform .3s var(--ressort); }
+.btn:hover .ic { transform: translateX(3px); }
+
+.ic { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+/* ---------- Pied de page ---------- */
+.pied {
+    margin-top: auto;
+    background: #000;
+    color: #fff;
+    border-top: 1px solid var(--ligne);
+}
+.pied-dedans {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 28px var(--marge);
+    font-size: 15px;
+}
+
+/* ---------- Animations d'arrivée ---------- */
+@keyframes apparait { from { opacity: 0; transform: translateY(14px); } }
+@keyframes glisse   { from { opacity: 0; transform: translateX(-16px); } }
+@keyframes barre    { from { transform: scaleX(0); } }
+
+@media (max-width: 600px) {
+    .entete-dedans { padding: 12px 16px; gap: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; animation-delay: 0s !important; transition-duration: .01ms !important; }
+}
+</style>
+
+<style>
+.entete .btn { margin-left: auto; }
+
+/* ---------- Bandeau de maintenance ---------- */
+.bandeau-maintenance {
+    background: var(--rouge);
+    color: #fff;
+    padding: 11px var(--marge) 9px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    z-index: 11 !important;
+}
+.bandeau-maintenance::before {
+    content: "";
+    display: inline-block;
+    width: 8px; height: 8px;
+    margin: 0 10px 1px 0;
+    border-radius: 50%;
+    background: currentColor;
+    vertical-align: middle;
+    animation: clignote 1.2s steps(1) infinite;
+}
+@keyframes clignote { 50% { opacity: 0; } }
+
+/* ---------- Contenu ---------- */
+main {
+    flex: 1;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: clamp(40px, 10vh, 120px) var(--marge) clamp(48px, 10vh, 120px);
+}
+.titre-section {
+    position: relative;
+    margin: 0 0 28px;
+    padding-bottom: 16px;
+    font-size: clamp(44px, 7vw, 96px);
+    font-weight: 900;
+    line-height: .92;
+    letter-spacing: -0.04em;
+    animation: glisse .55s var(--ressort) backwards;
+}
+.titre-section::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 4px;
+    background: var(--noir);
+    transform-origin: left;
+    animation: barre .8s var(--ressort) backwards;
+}
+
+.services {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+}
+.service {
+    background: var(--blanc);
+    border: 2px solid var(--noir);
+    box-shadow: 8px 8px 0 var(--noir);
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    animation: apparait .6s .15s var(--ressort) backwards;
+    transition: transform .25s var(--ressort), box-shadow .25s var(--ressort);
+}
+.service:hover { transform: translate(-3px, -3px); box-shadow: 11px 11px 0 var(--accent); }
+.service-ico {
+    width: 52px; height: 52px;
+    display: grid;
+    place-items: center;
+    background: var(--noir);
+    color: var(--blanc);
+    margin-bottom: 6px;
+}
+.service-ico .ic { width: 26px; height: 26px; }
+.service:hover .service-ico .ic { animation: flotte 1.6s ease-in-out infinite; }
+@keyframes flotte { 50% { transform: translateY(-3px); } }
+.service h2 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+}
+.service p {
+    margin: 0 0 8px;
+    color: var(--doux);
+    line-height: 1.55;
+}
+.service .btn { align-self: flex-start; margin-top: auto; }
+
+@media (prefers-color-scheme: dark) {
+    .bandeau-maintenance { color: #0a0a0a; }
+    .service { box-shadow: 8px 8px 0 #3a3a3a; }
+}
+@media (max-width: 600px) {
+    .nav { display: none; }
+    .service { box-shadow: 6px 6px 0 var(--noir); }
+}
+</style>
+</head>
+
+<body>
+<canvas id="fond" aria-hidden="true"></canvas>
+<div id="bandeauMaintenance" class="bandeau-maintenance">
+    Maintenance matérielle prévue le 17 novembre de 17h à 22h : des interruptions de service sont à prévoir.
+</div>
+<script>
+(function () {
+    var FIN_MAINTENANCE = new Date("2026-11-17T20:00:00+01:00");
+    if (new Date() > FIN_MAINTENANCE) document.getElementById("bandeauMaintenance").remove();
+})();
+</script>
+
+<header class="entete">
+    <div class="entete-dedans">
+        <a class="marque" href="./">
+            <img src="./public/logo.png" alt="de Loewe">
+        </a>
+        <nav class="nav">
+            <a href="./" class="actif">Accueil</a>
+            <a href="https://homecloud.deloewe.com">HomeCloud</a>
+        </nav>
+        <a class="btn" href="https://homecloud.deloewe.com">Se connecter</a>
+    </div>
+</header>
+
+<main>
+    <h1 class="titre-section">Services</h1>
+
+    <div class="services">
+        <div class="service">
+            <span class="service-ico"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18h10.5a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.6 9.1 4.5 4.5 0 0 0 7 18z"/></svg></span>
+            <h2>HomeCloud</h2>
+            <p>Accédez à votre espace de stockage personnel : fichiers, dossiers, musique.</p>
+            <a class="btn" href="https://homecloud.deloewe.com">Aller sur HomeCloud <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+    </div>
+</main>
+
+<footer class="pied">
+    <div class="pied-dedans">© de Loewe</div>
+</footer>
+<script>
+(function () {
+    var u = "https://status.deloewe.com/hit?s=deloewe";
+    try { navigator.sendBeacon ? navigator.sendBeacon(u) : fetch(u, { method: "POST", mode: "no-cors", keepalive: true }); } catch (e) {}
+})();
+</script>
+<script>
+/* =====================================================================
+   FOND ANIMÉ : grille de points qui ondule, paquets qui circulent,
+   grands carrés qui flottent. Réagit à la souris et au toucher.
+   ===================================================================== */
+(function () {
+    const OPTIONS = window.FOND_OPTIONS || {};
+    const reduit = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const cv = document.getElementById("fond"); if (!cv) return;
+    const cx = cv.getContext("2d");
+    let L = 0, H = 0, pas = 28, couleurs = {}, paquets = [], blocs = [];
+    const t0 = performance.now(), souris = { x: -9999, y: -9999 }, ondes = [];
+
+    function lireCouleurs() {
+        const st = getComputedStyle(document.documentElement);
+        couleurs = {
+            point: st.getPropertyValue("--noir").trim() || "#000",
+            paquet: st.getPropertyValue(OPTIONS.couleur || "--accent").trim() || "#1fb5a5"
+        };
+    }
+    function nouveauPaquet() {
+        const hor = Math.random() < .5;
+        return {
+            x: Math.round(Math.random() * L / pas) * pas + pas / 2,
+            y: Math.round(Math.random() * H / pas) * pas + pas / 2,
+            dx: hor ? (Math.random() < .5 ? 1 : -1) : 0, dy: hor ? 0 : (Math.random() < .5 ? 1 : -1),
+            v: 1.2 + Math.random() * 1.6, trace: [],
+            vie: 1, duree: OPTIONS.coupure ? 90 + Math.random() * 160 : Infinity, age: 0
+        };
+    }
+    function taille() {
+        const dpr = Math.min(2, devicePixelRatio || 1);
+        L = innerWidth; H = innerHeight;
+        cv.width = L * dpr; cv.height = H * dpr;
+        cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        pas = L < 600 ? 24 : 28;
+        paquets = Array.from({ length: L < 600 ? 5 : 9 }, nouveauPaquet);
+        blocs = Array.from({ length: L < 600 ? 4 : 7 }, (_, i) => ({
+            x: Math.random() * L, y: Math.random() * H, c: 60 + Math.random() * (L < 600 ? 90 : 180),
+            a: Math.random() * Math.PI, va: (Math.random() - .5) * .12,
+            vx: (Math.random() - .5) * 10, vy: (Math.random() - .5) * 10, plein: i % 3 === 0
+        }));
+        lireCouleurs();
+    }
+
+    function dessiner(maintenant) {
+        const t = (maintenant - t0) / 1000;
+        cx.clearRect(0, 0, L, H);
+
+        // grands carrés qui dérivent et tournent lentement
+        for (const b of blocs) {
+            if (!reduit) {
+                b.x += b.vx / 60; b.y += b.vy / 60; b.a += b.va / 60;
+                if (b.x < -b.c) b.x = L + b.c; if (b.x > L + b.c) b.x = -b.c;
+                if (b.y < -b.c) b.y = H + b.c; if (b.y > H + b.c) b.y = -b.c;
+            }
+            cx.save(); cx.translate(b.x, b.y); cx.rotate(b.a);
+            if (b.plein) { cx.globalAlpha = .06; cx.fillStyle = couleurs.point; cx.fillRect(-b.c / 2, -b.c / 2, b.c, b.c); }
+            else { cx.globalAlpha = .16; cx.strokeStyle = couleurs.point; cx.lineWidth = 1.5; cx.strokeRect(-b.c / 2, -b.c / 2, b.c, b.c); }
+            cx.restore();
+        }
+
+        // grille de points qui ondule
+        cx.fillStyle = couleurs.point;
+        for (let y = pas / 2; y < H + pas; y += pas) {
+            for (let x = pas / 2; x < L + pas; x += pas) {
+                const v = Math.sin(x * .011 + t * .7) + Math.cos(y * .013 - t * .55) + Math.sin((x + y) * .006 + t * .3);
+                let r = 1 + (v + 3) / 6 * 1.6, a = .3 + (v + 3) / 6 * .42;
+                let px = x + Math.cos(y * .02 + t) * 2, py = y + v * 5;
+                const ddx = px - souris.x, ddy = py - souris.y, d = Math.hypot(ddx, ddy);
+                if (d < 150) { const f = 1 - d / 150; px += ddx / (d || 1) * f * 14; py += ddy / (d || 1) * f * 14; r += f * 2.2; a += f * .45; }
+                for (const o of ondes) {
+                    const e = Math.abs(Math.hypot(x - o.x, y - o.y) - o.r);
+                    if (e < 26) { const f = (1 - e / 26) * o.vie; r += f * 2.5; a += f * .5; }
+                }
+                cx.globalAlpha = Math.min(1, a);
+                cx.fillRect(px - r / 2, py - r / 2, r, r);
+            }
+        }
+
+        // paquets qui suivent les lignes de la grille (et se perdent si "coupure")
+        cx.strokeStyle = couleurs.paquet; cx.fillStyle = couleurs.paquet; cx.lineWidth = 2;
+        for (const p of paquets) {
+            if (!reduit) {
+                p.age++;
+                if (p.age > p.duree) { p.vie -= .03; p.v *= .94; }
+                p.x += p.dx * p.v; p.y += p.dy * p.v;
+                p.trace.push([p.x, p.y]); if (p.trace.length > 34) p.trace.shift();
+                const gx = (p.x - pas / 2) / pas, gy = (p.y - pas / 2) / pas;
+                if (Math.abs(gx - Math.round(gx)) < .05 && Math.abs(gy - Math.round(gy)) < .05 && Math.random() < .18) {
+                    if (p.dx) { p.dy = Math.random() < .5 ? 1 : -1; p.dx = 0; } else { p.dx = Math.random() < .5 ? 1 : -1; p.dy = 0; }
+                }
+                if (p.vie <= 0 || p.x < -60 || p.x > L + 60 || p.y < -60 || p.y > H + 60) Object.assign(p, nouveauPaquet());
+            }
+            for (let k = 1; k < p.trace.length; k++) {
+                cx.globalAlpha = k / p.trace.length * .9 * Math.max(0, p.vie);
+                cx.beginPath(); cx.moveTo(p.trace[k - 1][0], p.trace[k - 1][1]); cx.lineTo(p.trace[k][0], p.trace[k][1]); cx.stroke();
+            }
+            // un paquet perdu clignote avant de disparaître
+            const clignote = p.age > p.duree && Math.floor(t * 8) % 2;
+            cx.globalAlpha = clignote ? .2 : Math.max(0, p.vie);
+            cx.fillRect(p.x - 3, p.y - 3, 6, 6);
+        }
+
+        for (let i = ondes.length - 1; i >= 0; i--) { const o = ondes[i]; o.r += 7; o.vie -= .012; if (o.vie <= 0) ondes.splice(i, 1); }
+        cx.globalAlpha = 1;
+        if (!reduit && !document.hidden) requestAnimationFrame(dessiner);
+    }
+
+    taille();
+    addEventListener("resize", () => { taille(); if (reduit) dessiner(performance.now()); });
+    addEventListener("pointermove", e => { souris.x = e.clientX; souris.y = e.clientY; }, { passive: true });
+    document.addEventListener("pointerleave", () => { souris.x = souris.y = -9999; });
+    addEventListener("pointerdown", e => { if (!reduit) ondes.push({ x: e.clientX, y: e.clientY, r: 0, vie: 1 }); }, { passive: true });
+    matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { lireCouleurs(); if (reduit) dessiner(performance.now()); });
+    document.addEventListener("visibilitychange", () => { if (!document.hidden && !reduit) requestAnimationFrame(dessiner); });
+    requestAnimationFrame(dessiner);
+})();
+</script>
+</body>
+</html>
